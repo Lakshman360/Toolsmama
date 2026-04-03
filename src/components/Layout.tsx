@@ -2,7 +2,6 @@ import { Link, Outlet, useLocation } from "react-router-dom";
 import { Menu, X, Heart, Moon, Sun } from "lucide-react";
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import Logo from "./Logo";
 
 const SITE_NAME = "ToolsMama";
 const TAGLINE = "All-in-One Free Online Tools";
@@ -40,7 +39,9 @@ export default function Layout() {
           <div className="flex justify-between h-16 items-center">
             <Link to="/" className="flex flex-col group">
               <div className="flex items-center gap-2">
-                <Logo className="h-10 w-auto group-hover:scale-110" />
+                <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-black text-sm group-hover:scale-110 transition-transform">
+                  T
+                </div>
                 <span className="font-extrabold text-xl tracking-tight bg-gradient-to-r from-blue-600 to-blue-500 bg-clip-text text-transparent">
                   {SITE_NAME}
                 </span>
@@ -116,7 +117,9 @@ export default function Layout() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
             <div className="space-y-4">
               <Link to="/" className="flex items-center gap-2">
-                <Logo className="h-8 w-auto" />
+                <div className="w-7 h-7 bg-blue-600 rounded-lg flex items-center justify-center text-white font-black text-xs">
+                  T
+                </div>
                 <span className="font-extrabold text-lg tracking-tight bg-gradient-to-r from-blue-600 to-blue-500 bg-clip-text text-transparent">
                   {SITE_NAME}
                 </span>
