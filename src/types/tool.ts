@@ -19,7 +19,7 @@ export interface Tool {
   description: string;
   category: ToolCategory;
   icon: LucideIcon;
-  component: React.LazyExoticComponent<() => React.JSX.Element>;
+  component: React.LazyExoticComponent<React.ComponentType<any>>;
   seoTitle?: string;
   metaDescription?: string;
   keywords?: string[];

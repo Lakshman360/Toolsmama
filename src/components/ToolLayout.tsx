@@ -24,7 +24,7 @@ export default function ToolLayout({ title, desc, icon: Icon, badge, children, f
   const finalContent = toolFromRegistry?.content;
 
   return (
-    <div className="py-12 md:py-20 bg-slate-50 dark:bg-slate-900 min-h-screen transition-colors duration-300">
+    <div className="py-12 md:py-20 bg-white dark:bg-[#111827] min-h-screen transition-colors duration-300">
       <Helmet>
         <title>{finalSeoTitle}</title>
         <meta name="description" content={finalMetaDescription} />
@@ -32,7 +32,7 @@ export default function ToolLayout({ title, desc, icon: Icon, badge, children, f
       </Helmet>
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Link to="/tools.html" className="inline-flex items-center gap-2 text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 font-medium mb-12 transition-all hover:-translate-x-1">
+        <Link to="/tools.html" className="inline-flex items-center gap-2 text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 font-medium mb-12 transition-all hover:-translate-x-1">
           <ArrowLeft size={18} />
           Back to all tools
         </Link>
@@ -49,7 +49,7 @@ export default function ToolLayout({ title, desc, icon: Icon, badge, children, f
           <motion.h1
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-4 tracking-tight"
+            className="text-4xl md:text-5xl font-black text-gray-900 dark:text-white mb-4 tracking-tight"
           >
             {title}
           </motion.h1>
@@ -57,7 +57,7 @@ export default function ToolLayout({ title, desc, icon: Icon, badge, children, f
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-lg text-slate-500 dark:text-slate-400 max-w-2xl mx-auto"
+            className="text-lg text-gray-500 dark:text-gray-400 max-w-2xl mx-auto"
           >
             {desc}
           </motion.p>
@@ -74,13 +74,13 @@ export default function ToolLayout({ title, desc, icon: Icon, badge, children, f
         {features && (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
             {features.map((feat, idx) => (
-              <div key={idx} className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-6 flex gap-4 items-start">
+              <div key={idx} className="bg-white dark:bg-[#1f2937] border border-gray-200 dark:border-gray-700 rounded-2xl p-6 flex gap-4 items-start">
                 <div className="w-10 h-10 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-xl flex items-center justify-center flex-shrink-0">
                   <feat.icon size={20} />
                 </div>
                 <div>
-                  <h4 className="font-bold text-slate-900 dark:text-white text-sm mb-1">{feat.title}</h4>
-                  <p className="text-slate-500 dark:text-slate-400 text-xs leading-relaxed">{feat.desc}</p>
+                  <h4 className="font-bold text-gray-900 dark:text-white text-sm mb-1">{feat.title}</h4>
+                  <p className="text-gray-500 dark:text-gray-400 text-xs leading-relaxed">{feat.desc}</p>
                 </div>
               </div>
             ))}
@@ -89,13 +89,13 @@ export default function ToolLayout({ title, desc, icon: Icon, badge, children, f
 
         {/* Detailed Content for SEO */}
         {finalContent && (
-          <div className="mt-16 space-y-12 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-[2.5rem] p-8 md:p-12 shadow-sm">
+          <div className="mt-16 space-y-12 bg-white dark:bg-[#1f2937] border border-gray-200 dark:border-gray-700 rounded-[2.5rem] p-8 md:p-12 shadow-sm">
             <section>
               <div className="flex items-center gap-3 mb-4">
                 <Info className="text-blue-600 dark:text-blue-400" size={24} />
-                <h2 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">What is this tool?</h2>
+                <h2 className="text-2xl font-black text-gray-900 dark:text-white tracking-tight">What is this tool?</h2>
               </div>
-              <p className="text-slate-600 dark:text-slate-400 leading-relaxed text-lg">
+              <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-lg">
                 {finalContent.whatIsIt}
               </p>
             </section>
@@ -103,22 +103,22 @@ export default function ToolLayout({ title, desc, icon: Icon, badge, children, f
             <section>
               <div className="flex items-center gap-3 mb-4">
                 <Zap className="text-blue-600 dark:text-blue-400" size={24} />
-                <h2 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">How it works?</h2>
+                <h2 className="text-2xl font-black text-gray-900 dark:text-white tracking-tight">How it works?</h2>
               </div>
-              <p className="text-slate-600 dark:text-slate-400 leading-relaxed text-lg">
+              <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-lg">
                 {finalContent.howItWorks}
               </p>
             </section>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <section className="bg-slate-50 dark:bg-slate-900/50 p-8 rounded-3xl border border-slate-100 dark:border-slate-700">
+              <section className="bg-gray-50 dark:bg-[#111827]/50 p-8 rounded-3xl border border-gray-100 dark:border-gray-700">
                 <div className="flex items-center gap-3 mb-4">
                   <Star className="text-blue-600 dark:text-blue-400" size={20} />
-                  <h2 className="text-xl font-bold text-slate-900 dark:text-white">Key Features</h2>
+                  <h2 className="text-xl font-bold text-gray-900 dark:text-white">Key Features</h2>
                 </div>
                 <ul className="space-y-3">
                   {finalContent.keyFeatures.map((feature, i) => (
-                    <li key={i} className="flex items-start gap-3 text-slate-600 dark:text-slate-400">
+                    <li key={i} className="flex items-start gap-3 text-gray-600 dark:text-gray-400">
                       <div className="w-1.5 h-1.5 rounded-full bg-blue-400 mt-2 shrink-0" />
                       <span>{feature}</span>
                     </li>
@@ -126,14 +126,14 @@ export default function ToolLayout({ title, desc, icon: Icon, badge, children, f
                 </ul>
               </section>
 
-              <section className="bg-slate-50 dark:bg-slate-900/50 p-8 rounded-3xl border border-slate-100 dark:border-slate-700">
+              <section className="bg-gray-50 dark:bg-[#111827]/50 p-8 rounded-3xl border border-gray-100 dark:border-gray-700">
                 <div className="flex items-center gap-3 mb-4">
                   <Star className="text-blue-600 dark:text-blue-400" size={20} />
-                  <h2 className="text-xl font-bold text-slate-900 dark:text-white">Benefits</h2>
+                  <h2 className="text-xl font-bold text-gray-900 dark:text-white">Benefits</h2>
                 </div>
                 <ul className="space-y-3">
                   {finalContent.benefits.map((benefit, i) => (
-                    <li key={i} className="flex items-start gap-3 text-slate-600 dark:text-slate-400">
+                    <li key={i} className="flex items-start gap-3 text-gray-600 dark:text-gray-400">
                       <div className="w-1.5 h-1.5 rounded-full bg-blue-400 mt-2 shrink-0" />
                       <span>{benefit}</span>
                     </li>
@@ -145,9 +145,9 @@ export default function ToolLayout({ title, desc, icon: Icon, badge, children, f
             <section>
               <div className="flex items-center gap-3 mb-4">
                 <HelpCircle className="text-blue-600 dark:text-blue-400" size={24} />
-                <h2 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">When to use it?</h2>
+                <h2 className="text-2xl font-black text-gray-900 dark:text-white tracking-tight">When to use it?</h2>
               </div>
-              <p className="text-slate-600 dark:text-slate-400 leading-relaxed text-lg">
+              <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-lg">
                 {finalContent.whenToUse}
               </p>
             </section>

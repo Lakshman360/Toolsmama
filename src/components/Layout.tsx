@@ -32,9 +32,9 @@ export default function Layout() {
   }, [location]);
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-900 font-sans text-slate-900 dark:text-slate-100 transition-colors duration-300">
+    <div className="min-h-screen flex flex-col bg-white dark:bg-[#111827] font-sans text-gray-900 dark:text-white transition-colors duration-300">
       {/* Navbar */}
-      <nav className="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+      <nav className="sticky top-0 z-50 bg-white/80 dark:bg-[#111827]/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16 items-center">
             <Link to="/" className="flex flex-col group">
@@ -59,14 +59,6 @@ export default function Layout() {
               <NavLink to="/about" active={location.pathname === "/about"}>About</NavLink>
               <NavLink to="/contact" active={location.pathname === "/contact"}>Contact</NavLink>
               
-              <button
-                onClick={() => setIsDarkMode(!isDarkMode)}
-                className="ml-2 p-2 text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-                aria-label="Toggle dark mode"
-              >
-                {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
-              </button>
-
               <Link
                 to="/tools"
                 className="ml-4 px-5 py-2 bg-blue-600 text-white rounded-full font-semibold text-sm hover:bg-blue-700 transition-all shadow-md hover:shadow-lg active:scale-95"
@@ -77,12 +69,6 @@ export default function Layout() {
 
             {/* Mobile Menu Button */}
             <div className="flex items-center gap-2 md:hidden">
-              <button
-                onClick={() => setIsDarkMode(!isDarkMode)}
-                className="p-2 text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-              >
-                {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
-              </button>
               <button
                 className="p-2 text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -126,7 +112,7 @@ export default function Layout() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 pt-16 pb-8">
+      <footer className="bg-white dark:bg-[#111827] border-t border-gray-200 dark:border-gray-800 pt-16 pb-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
             <div className="space-y-4">
@@ -150,6 +136,12 @@ export default function Layout() {
               <h4 className="font-bold text-sm text-slate-900 dark:text-white mb-4 uppercase tracking-wider">PDF Tools</h4>
               <ul className="space-y-2">
                 <li><FooterLink to="/tool/merge-pdf">Merge PDF</FooterLink></li>
+                <li><FooterLink to="/tool/split-pdf">Split PDF</FooterLink></li>
+                <li><FooterLink to="/tool/compress-pdf">Compress PDF</FooterLink></li>
+                <li><FooterLink to="/tool/pdf-to-jpg">PDF to JPG</FooterLink></li>
+                <li><FooterLink to="/tool/jpg-to-pdf">JPG to PDF</FooterLink></li>
+                <li><FooterLink to="/tool/pdf-to-word">PDF to Word</FooterLink></li>
+                <li><FooterLink to="/tool/word-to-pdf">Word to PDF</FooterLink></li>
               </ul>
             </div>
 

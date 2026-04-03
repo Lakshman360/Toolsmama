@@ -11,7 +11,7 @@
   }
   
   body {
-    @apply bg-slate-50 text-slate-900 dark:bg-slate-900 dark:text-white transition-colors duration-300;
+    @apply bg-white text-gray-900 dark:bg-[#111827] dark:text-white transition-colors duration-300;
   }
 }
 

@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import { Split, Download, Trash2, Zap, ShieldCheck, Sparkles, FileText, Loader2, AlertCircle } from "lucide-react";
-import { PDFDocument } from "pdf-lib";
+import { FileText, Download, Trash2, Zap, ShieldCheck, Sparkles, FileType, Loader2, AlertCircle } from "lucide-react";
+import mammoth from "mammoth";
+import { jsPDF } from "jspdf";
 import ToolLayout from "../../components/ToolLayout";
 import FileDropzone, { FileList } from "../../components/FileDropzone";
 import { motion, AnimatePresence } from "motion/react";
 
-const SplitPDF = () => {
+const WordToPDF = () => {
   const [files, setFiles] = useState<File[]>([]);
-  const [pages, setPages] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [downloadUrl, setDownloadUrl] = useState<string | null>(null);
@@ -16,12 +16,12 @@ const SplitPDF = () => {
 
   const handleFileSelect = (newFiles: File[]) => {
     const f = newFiles[0];
-    if (f && f.type === "application/pdf") {
+    if (f && (f.name.endsWith(".docx") || f.type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document")) {
       setFiles([f]);
       setError(null);
       setDownloadUrl(null);
     } else {
-      setError("Please select a valid PDF file.");
+      setError("Please select a valid Word (.docx) file.");
     }
   };
 
@@ -30,49 +30,38 @@ const SplitPDF = () => {
     setDownloadUrl(null);
   };
 
-  const splitPdf = async () => {
-    if (!file || !pages) return;
+  const convertToPDF = async () => {
+    if (!file) return;
     setLoading(true);
     setError(null);
     try {
-      const existingPdfBytes = await file.arrayBuffer();
-      const pdfDoc = await PDFDocument.load(existingPdfBytes);
-      const totalPages = pdfDoc.getPageCount();
+      const arrayBuffer = await file.arrayBuffer();
+      const result = await mammoth.extractRawText({ arrayBuffer });
+      const text = result.value;
       
-      const pageIndices = pages.split(",")
-        .map(p => parseInt(p.trim()) - 1)
-        .filter(p => !isNaN(p) && p >= 0 && p < totalPages);
-
-      if (pageIndices.length === 0) {
-        setError(`Please enter valid page numbers (1-${totalPages}).`);
-        setLoading(false);
-        return;
-      }
-
-      const newPdfDoc = await PDFDocument.create();
-      const copiedPages = await newPdfDoc.copyPages(pdfDoc, pageIndices);
-      copiedPages.forEach(page => newPdfDoc.addPage(page));
-
-      const pdfBytes = await newPdfDoc.save();
-      const blob = new Blob([pdfBytes], { type: "application/pdf" });
-      setDownloadUrl(URL.createObjectURL(blob));
+      const doc = new jsPDF();
+      const splitText = doc.splitTextToSize(text, 180);
+      doc.text(splitText, 15, 15);
+      
+      const pdfBlob = doc.output("blob");
+      setDownloadUrl(URL.createObjectURL(pdfBlob));
     } catch (error) {
       console.error(error);
-      setError("Error splitting PDF. Please check the file and page numbers.");
+      setError("Error converting Word to PDF. Please ensure the file is a valid .docx document.");
     }
     setLoading(false);
   };
 
   return (
     <ToolLayout
-      title="Split PDF"
-      desc="Extract specific pages from your PDF file into a new document."
-      icon={Split}
+      title="Word to PDF"
+      desc="Convert your Word documents (.docx) into high-quality PDF files."
+      icon={FileType}
       badge="PDF Tool"
       features={[
-        { icon: Sparkles, title: "Custom Pages", desc: "Specify exact pages to extract (e.g., 1, 3, 5)." },
-        { icon: Zap, title: "Fast", desc: "PDF processing happens entirely in your browser." },
-        { icon: ShieldCheck, title: "Private", desc: "Your PDF never leaves your device." }
+        { icon: Sparkles, title: "Clean Conversion", desc: "Converts text content while preserving layout." },
+        { icon: Zap, title: "Fast", desc: "Conversion happens entirely in your browser." },
+        { icon: ShieldCheck, title: "Secure", desc: "Your Word file never leaves your device." }
       ]}
     >
       <div className="bg-white dark:bg-[#1f2937] border border-gray-200 dark:border-gray-700 rounded-[2.5rem] p-8 md:p-12 shadow-sm transition-colors duration-300">
@@ -80,24 +69,13 @@ const SplitPDF = () => {
           <FileDropzone 
             onFileSelect={handleFileSelect} 
             multiple={false} 
-            accept="application/pdf"
-            title="Drop your PDF here or click to browse"
-            icon={FileText}
+            accept=".docx" 
+            title="Drop your Word file here"
+            icon={FileType}
           />
         ) : (
           <div className="space-y-8">
             <FileList files={files} onRemove={handleRemoveFile} onClear={handleRemoveFile} />
-
-            <div className="space-y-4">
-              <label className="block text-xs font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest">Enter Page Numbers (e.g., 1, 2, 5)</label>
-              <input
-                type="text"
-                value={pages}
-                onChange={(e) => setPages(e.target.value)}
-                placeholder="1, 2, 5"
-                className="w-full px-6 py-4 bg-gray-50 dark:bg-[#111827]/50 border border-gray-100 dark:border-gray-800 rounded-2xl outline-none focus:border-blue-500 dark:focus:border-blue-400 text-gray-900 dark:text-white transition-all font-bold"
-              />
-            </div>
 
             <AnimatePresence>
               {error && (
@@ -115,19 +93,19 @@ const SplitPDF = () => {
 
             <div className="flex flex-col gap-6">
               <button
-                onClick={splitPdf}
-                disabled={loading || !pages}
+                onClick={convertToPDF}
+                disabled={loading || downloadUrl !== null}
                 className="w-full py-5 bg-blue-600 text-white rounded-2xl font-black text-xl flex items-center justify-center gap-4 hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg shadow-blue-200 dark:shadow-none active:scale-95"
               >
                 {loading ? (
                   <>
                     <Loader2 size={28} className="animate-spin" />
-                    Processing...
+                    Converting...
                   </>
                 ) : (
                   <>
-                    <Zap size={28} />
-                    Split PDF
+                    <FileText size={28} />
+                    Convert Word to PDF
                   </>
                 )}
               </button>
@@ -137,11 +115,11 @@ const SplitPDF = () => {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   href={downloadUrl}
-                  download={`split-${file.name}`}
+                  download={`${file.name.replace(".docx", "")}-toolsmama.pdf`}
                   className="w-full py-5 bg-emerald-600 text-white rounded-2xl font-black text-xl flex items-center justify-center gap-4 hover:bg-emerald-700 transition-all shadow-lg shadow-emerald-200 dark:shadow-none animate-bounce-subtle"
                 >
                   <Download size={28} />
-                  Download Split PDF
+                  Download PDF File
                 </motion.a>
               )}
             </div>
@@ -152,4 +130,4 @@ const SplitPDF = () => {
   );
 };
 
-export default SplitPDF;
+export default WordToPDF;

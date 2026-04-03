@@ -161,6 +161,204 @@ export const TOOLS: Tool[] = [
       whenToUse: "Use this tool when you have a large PDF but only need a few pages from it, or when you want to separate a combined document into its original parts."
     }
   },
+  {
+    id: "compress-pdf",
+    name: "Compress PDF",
+    description: "Reduce PDF file size without losing quality.",
+    category: "pdf",
+    icon: FileArchive,
+    component: lazy(() => import("../pages/tools/CompressPDF")),
+    seoTitle: "Compress PDF Online Free - ToolsMama",
+    metaDescription: "Reduce PDF file size online for free while maintaining quality. Fast, secure, and browser-based PDF compression tool.",
+    keywords: ["compress pdf", "reduce pdf size", "shrink pdf", "free pdf compressor", "online pdf optimizer"],
+    content: {
+      whatIsIt: "The Compress PDF tool is designed to reduce the file size of your PDF documents without significantly compromising their quality. This is essential for meeting email attachment limits or saving storage space.",
+      howItWorks: "This tool uses the `pdf-lib` library to optimize the internal structure of the PDF, such as compressing images and removing unnecessary metadata. All processing happens locally in your browser, ensuring your documents remain private.",
+      keyFeatures: ["Efficient file size reduction", "Maintain document readability", "Fast and secure local processing", "No file size limits", "Privacy-focused"],
+      benefits: ["Easier to share large PDFs via email", "Saves storage space on your device", "Improves document loading times", "No data leaves your computer", "Completely free"],
+      whenToUse: "Use this tool when you have a PDF that is too large to send via email or when you want to optimize your digital archives for better storage efficiency."
+    }
+  },
+  {
+    id: "pdf-to-jpg",
+    name: "PDF to JPG",
+    description: "Convert PDF pages into JPG images.",
+    category: "pdf",
+    icon: FileImage,
+    component: lazy(() => import("../pages/tools/PDFToJPG")),
+    seoTitle: "Convert PDF to JPG Online Free - ToolsMama",
+    metaDescription: "Convert PDF pages into high-quality JPG images online for free. Fast, secure, and browser-based PDF to image conversion.",
+    keywords: ["pdf to jpg", "convert pdf to image", "pdf to jpeg", "free pdf to jpg converter", "online pdf to image"],
+    content: {
+      whatIsIt: "The PDF to JPG tool allows you to convert each page of a PDF document into a separate, high-quality JPG image. This is useful for sharing specific pages as images or using them in presentations.",
+      howItWorks: "This tool uses `pdfjs-dist` to render PDF pages onto a canvas and then exports them as JPG images. The entire process is handled locally on your device, ensuring your documents are never uploaded to a server.",
+      keyFeatures: ["Convert all pages to JPG", "High-quality image output", "Fast and secure local processing", "No file size limits", "Privacy-focused"],
+      benefits: ["Easily share PDF pages as images", "Use PDF content in image-only platforms", "No software installation required", "Maintains visual integrity", "Free to use"],
+      whenToUse: "Use this tool when you need to extract a page from a PDF to use as an image in a social media post, a blog, or a presentation."
+    }
+  },
+  {
+    id: "jpg-to-pdf",
+    name: "JPG to PDF",
+    description: "Convert JPG images into a PDF document.",
+    category: "pdf",
+    icon: FilePlus,
+    component: lazy(() => import("../pages/tools/JPGToPDF")),
+    seoTitle: "Convert JPG to PDF Online Free - ToolsMama",
+    metaDescription: "Convert JPG images into a single PDF document online for free. Easily combine photos into a PDF. Fast, secure, and browser-based tool.",
+    keywords: ["jpg to pdf", "convert image to pdf", "jpeg to pdf", "free jpg to pdf converter", "online image to pdf"],
+    content: {
+      whatIsIt: "The JPG to PDF tool allows you to combine one or more JPG images into a single PDF document. This is a great way to create digital albums, portfolios, or to package scanned documents.",
+      howItWorks: "This tool uses the `jspdf` library to create a new PDF document and embed your uploaded JPG images into it. The conversion happens entirely in your browser, keeping your photos private and secure.",
+      keyFeatures: ["Convert multiple JPGs to one PDF", "Adjustable page orientation", "Fast and secure local processing", "No file size limits", "Privacy-focused"],
+      benefits: ["Create professional PDF documents from images", "Easier to share multiple photos as one file", "No data leaves your device", "Fast and responsive", "Completely free"],
+      whenToUse: "Use this tool when you have scanned photos or documents that you want to combine into a single PDF for easy sharing or archiving."
+    }
+  },
+  {
+    id: "pdf-to-word",
+    name: "PDF to Word",
+    description: "Convert PDF documents into Word files.",
+    category: "pdf",
+    icon: FileText,
+    component: lazy(() => import("../pages/tools/PDFToWord")),
+    seoTitle: "Convert PDF to Word Online Free - ToolsMama",
+    metaDescription: "Convert PDF documents into editable Word (.docx) files online for free. Fast, secure, and browser-based PDF to Word conversion.",
+    keywords: ["pdf to word", "convert pdf to docx", "pdf to editable word", "free pdf to word converter", "online pdf to word"],
+    content: {
+      whatIsIt: "The PDF to Word tool allows you to transform your PDF documents into editable Microsoft Word (.docx) files. This makes it easy to modify the content of a PDF without needing specialized editing software.",
+      howItWorks: "This tool uses `pdfjs-dist` to extract text from the PDF and then uses the `docx` library to generate a new Word document with that text. Note that complex layouts might not be perfectly preserved. All processing is local.",
+      keyFeatures: ["Convert PDF to editable .docx", "Extract text accurately", "Fast and secure local processing", "No file size limits", "Privacy-focused"],
+      benefits: ["Easily edit PDF content in Word", "Saves time retyping documents", "No software installation required", "Maintains text content", "Free to use"],
+      whenToUse: "Use this tool when you have a PDF document that you need to update or repurpose and want to work with it in a familiar word processor like Microsoft Word."
+    }
+  },
+  {
+    id: "word-to-pdf",
+    name: "Word to PDF",
+    description: "Convert Word documents into PDF files.",
+    category: "pdf",
+    icon: FilePlus,
+    component: lazy(() => import("../pages/tools/WordToPDF")),
+    seoTitle: "Convert Word to PDF Online Free - ToolsMama",
+    metaDescription: "Convert Microsoft Word (.docx) documents into PDF files online for free. Fast, secure, and browser-based Word to PDF conversion.",
+    keywords: ["word to pdf", "convert docx to pdf", "word to pdf converter", "free word to pdf", "online docx to pdf"],
+    content: {
+      whatIsIt: "The Word to PDF tool allows you to convert your Microsoft Word (.docx) documents into the universally compatible PDF format. This ensures that your document's formatting remains consistent across all devices.",
+      howItWorks: "This tool uses the `mammoth` library to convert the Word document's content into HTML/text and then uses `jspdf` to generate a PDF file. The entire conversion happens locally in your browser, ensuring your privacy.",
+      keyFeatures: ["Convert .docx to high-quality PDF", "Maintain text formatting", "Fast and secure local processing", "No file size limits", "Privacy-focused"],
+      benefits: ["Ensure document formatting is preserved", "Create professional-looking PDFs", "No data leaves your computer", "Fast and responsive", "Completely free"],
+      whenToUse: "Use this tool when you've finished a document in Word and want to share it in a format that anyone can open and view exactly as you intended."
+    }
+  },
+  {
+    id: "pdf-lock",
+    name: "Protect PDF",
+    description: "Add a password to your PDF document.",
+    category: "pdf",
+    icon: ShieldCheck,
+    component: lazy(() => import("../pages/tools/PDFLock")),
+    seoTitle: "Protect PDF Online Free - ToolsMama",
+    metaDescription: "Add a password to your PDF files online for free. Secure your documents with strong encryption. Fast and secure browser-based tool.",
+    keywords: ["protect pdf", "password protect pdf", "encrypt pdf", "free pdf locker", "online pdf security"],
+    content: {
+      whatIsIt: "The Protect PDF tool allows you to add a password to your PDF documents, ensuring that only authorized individuals can open and view the content.",
+      howItWorks: "This tool uses the `pdf-lib` library to apply security settings to your PDF. You specify a password, and the tool encrypts the document locally in your browser. No data is ever uploaded to a server.",
+      keyFeatures: ["Add password protection", "Fast and secure local processing", "No file size limits", "Privacy-focused"],
+      benefits: ["Secure your sensitive information", "Control who can access your documents", "No software installation required", "Maintains document quality", "Completely free"],
+      whenToUse: "Use this tool when you have a PDF containing sensitive or private information that you need to share securely."
+    }
+  },
+  {
+    id: "pdf-unlock",
+    name: "Unlock PDF",
+    description: "Remove password from your PDF document.",
+    category: "pdf",
+    icon: Lock,
+    component: lazy(() => import("../pages/tools/PDFUnlock")),
+    seoTitle: "Unlock PDF Online Free - ToolsMama",
+    metaDescription: "Remove password protection from your PDF files online for free. Easily unlock protected PDFs in seconds. Fast and secure browser-based tool.",
+    keywords: ["unlock pdf", "remove pdf password", "decrypt pdf", "free pdf unlocker", "online pdf security"],
+    content: {
+      whatIsIt: "The Unlock PDF tool allows you to remove password protection from your PDF documents, making them accessible without needing to enter a password every time.",
+      howItWorks: "This tool uses the `pdf-lib` library to decrypt your PDF locally in your browser. You provide the current password, and the tool generates a new, unprotected version of the document.",
+      keyFeatures: ["Remove password protection", "Fast and secure local processing", "No file size limits", "Privacy-focused"],
+      benefits: ["Easier access to your documents", "Remove security from files you own", "No data leaves your computer", "Fast and responsive", "Completely free"],
+      whenToUse: "Use this tool when you have a password-protected PDF that you no longer need to keep secure and want to make it easier to open."
+    }
+  },
+  {
+    id: "pdf-rotate",
+    name: "Rotate PDF",
+    description: "Rotate all pages in your PDF document.",
+    category: "pdf",
+    icon: RotateCw,
+    component: lazy(() => import("../pages/tools/PDFRotate")),
+    seoTitle: "Rotate PDF Online Free - ToolsMama",
+    metaDescription: "Rotate PDF pages online for free. Quickly rotate your PDF documents by 90, 180, or 270 degrees. Fast and secure browser-based tool.",
+    keywords: ["rotate pdf", "change pdf orientation", "flip pdf pages", "free pdf rotator", "online pdf tool"],
+    content: {
+      whatIsIt: "The Rotate PDF tool allows you to change the orientation of all pages in your PDF document. This is perfect for fixing documents that were scanned or saved in the wrong orientation.",
+      howItWorks: "This tool uses the `pdf-lib` library to adjust the rotation property of each page in your PDF. The entire process is handled locally on your device, ensuring your documents remain private.",
+      keyFeatures: ["Rotate pages by 90, 180, or 270 degrees", "Fast and secure local processing", "No file size limits", "Privacy-focused"],
+      benefits: ["Fix orientation issues easily", "No need for complex PDF editors", "Maintains document quality", "Fast and responsive", "Completely free"],
+      whenToUse: "Use this tool when you have a PDF that is upside down or sideways and you want to fix its orientation for better readability."
+    }
+  },
+  {
+    id: "pdf-extract-pages",
+    name: "Extract PDF Pages",
+    description: "Extract specific pages from your PDF.",
+    category: "pdf",
+    icon: Scissors,
+    component: lazy(() => import("../pages/tools/PDFExtractPages")),
+    seoTitle: "Extract PDF Pages Online Free - ToolsMama",
+    metaDescription: "Extract specific pages from your PDF files online for free. Create a new PDF with only the pages you need. Fast and secure browser-based tool.",
+    keywords: ["extract pdf pages", "split pdf pages", "get pages from pdf", "free pdf extractor", "online pdf tool"],
+    content: {
+      whatIsIt: "The Extract PDF Pages tool allows you to select and save specific pages from a PDF document into a new file. This is useful for sharing only the relevant parts of a large document.",
+      howItWorks: "This tool uses the `pdf-lib` library to copy specific pages from your source PDF into a new document. The extraction happens entirely in your browser, keeping your data private and secure.",
+      keyFeatures: ["Extract specific page ranges", "Fast and secure local processing", "No file size limits", "Privacy-focused"],
+      benefits: ["Share only what's necessary", "Reduce file size by extracting only needed pages", "No data leaves your computer", "Fast and responsive", "Completely free"],
+      whenToUse: "Use this tool when you have a large report or document but only need to share or keep a few specific pages."
+    }
+  },
+  {
+    id: "pdf-delete-pages",
+    name: "Delete PDF Pages",
+    description: "Remove specific pages from your PDF.",
+    category: "pdf",
+    icon: Scissors,
+    component: lazy(() => import("../pages/tools/PDFDeletePages")),
+    seoTitle: "Delete PDF Pages Online Free - ToolsMama",
+    metaDescription: "Remove specific pages from your PDF files online for free. Easily delete unwanted pages from your PDF. Fast and secure browser-based tool.",
+    keywords: ["delete pdf pages", "remove pdf pages", "cut pdf pages", "free pdf deleter", "online pdf tool"],
+    content: {
+      whatIsIt: "The Delete PDF Pages tool allows you to remove unwanted pages from your PDF document, helping you clean up and organize your files.",
+      howItWorks: "This tool uses the `pdf-lib` library to create a new PDF document that excludes the pages you've specified for deletion. The entire process is handled locally in your browser.",
+      keyFeatures: ["Delete specific page ranges", "Fast and secure local processing", "No file size limits", "Privacy-focused"],
+      benefits: ["Clean up your documents", "Reduce file size by removing unneeded pages", "No data leaves your device", "Fast and responsive", "Completely free"],
+      whenToUse: "Use this tool when you have a PDF that contains unnecessary pages, such as blank pages, cover sheets, or irrelevant sections."
+    }
+  },
+  {
+    id: "pdf-reorder-pages",
+    name: "Reorder PDF Pages",
+    description: "Change the order of pages in your PDF.",
+    category: "pdf",
+    icon: Layers,
+    component: lazy(() => import("../pages/tools/PDFReorderPages")),
+    seoTitle: "Reorder PDF Pages Online Free - ToolsMama",
+    metaDescription: "Change the order of pages in your PDF files online for free. Easily rearrange PDF pages in seconds. Fast and secure browser-based tool.",
+    keywords: ["reorder pdf pages", "rearrange pdf pages", "sort pdf pages", "free pdf reorderer", "online pdf tool"],
+    content: {
+      whatIsIt: "The Reorder PDF Pages tool allows you to rearrange the sequence of pages in your PDF document, giving you full control over the document's structure.",
+      howItWorks: "This tool uses the `pdf-lib` library to create a new PDF document with pages in the sequence you specify. The reordering happens entirely in your browser, ensuring your privacy.",
+      keyFeatures: ["Rearrange pages easily", "Fast and secure local processing", "No file size limits", "Privacy-focused"],
+      benefits: ["Organize your documents exactly how you want", "Fix out-of-order pages", "No data leaves your computer", "Fast and responsive", "Completely free"],
+      whenToUse: "Use this tool when the pages in your PDF are in the wrong order and you need to rearrange them for a more logical flow."
+    }
+  },
 
   // TEXT TOOLS (40)
   {

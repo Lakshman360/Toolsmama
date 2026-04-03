@@ -1,86 +1,95 @@
-import { FileText, FilePlus, Download, Loader2, ShieldCheck, Zap, Sparkles, AlertCircle } from "lucide-react";
 import React, { useState } from "react";
+import { FileText, Download, Trash2, Zap, ShieldCheck, Sparkles, Image as ImageIcon, Loader2, AlertCircle } from "lucide-react";
+import { PDFDocument } from "pdf-lib";
 import ToolLayout from "../../components/ToolLayout";
 import FileDropzone, { FileList } from "../../components/FileDropzone";
-import { PDFDocument } from "pdf-lib";
 import { motion, AnimatePresence } from "motion/react";
 
-const MergePDF = () => {
+const JPGToPDF = () => {
   const [files, setFiles] = useState<File[]>([]);
-  const [isMerging, setIsMerging] = useState(false);
-  const [mergedUrl, setMergedUrl] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [downloadUrl, setDownloadUrl] = useState<string | null>(null);
 
   const handleFileSelect = (newFiles: File[]) => {
-    const pdfFiles = newFiles.filter(f => f.type === "application/pdf");
-    if (pdfFiles.length === 0) {
-      setError("Please select valid PDF files.");
+    const imgFiles = newFiles.filter(f => f.type === "image/jpeg" || f.type === "image/jpg" || f.type === "image/png");
+    if (imgFiles.length === 0) {
+      setError("Please select valid JPG or PNG images.");
       return;
     }
-    setFiles(prev => [...prev, ...pdfFiles]);
-    setMergedUrl(null);
+    setFiles(prev => [...prev, ...imgFiles]);
+    setDownloadUrl(null);
     setError(null);
   };
 
-  const removeFile = (index: number) => {
+  const handleRemoveFile = (index: number) => {
     setFiles(prev => prev.filter((_, i) => i !== index));
-    setMergedUrl(null);
+    setDownloadUrl(null);
   };
 
   const handleClearFiles = () => {
     setFiles([]);
-    setMergedUrl(null);
+    setDownloadUrl(null);
   };
 
-  const mergePDFs = async () => {
-    if (files.length < 2) {
-      setError("Please select at least 2 PDF files to merge.");
-      return;
-    }
-    setIsMerging(true);
+  const convertToPDF = async () => {
+    if (files.length === 0) return;
+    setLoading(true);
     setError(null);
     try {
-      const mergedPdf = await PDFDocument.create();
+      const pdfDoc = await PDFDocument.create();
+      
       for (const file of files) {
         const bytes = await file.arrayBuffer();
-        const pdf = await PDFDocument.load(bytes);
-        const pages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
-        pages.forEach(page => mergedPdf.addPage(page));
+        let image;
+        if (file.type === "image/png") {
+          image = await pdfDoc.embedPng(bytes);
+        } else {
+          image = await pdfDoc.embedJpg(bytes);
+        }
+        
+        const page = pdfDoc.addPage([image.width, image.height]);
+        page.drawImage(image, {
+          x: 0,
+          y: 0,
+          width: image.width,
+          height: image.height,
+        });
       }
-      const mergedBytes = await mergedPdf.save();
-      const blob = new Blob([mergedBytes], { type: "application/pdf" });
-      setMergedUrl(URL.createObjectURL(blob));
-    } catch (err) {
-      console.error(err);
-      setError("Failed to merge PDFs. Please ensure all files are valid PDF documents.");
-    } finally {
-      setIsMerging(false);
+      
+      const pdfBytes = await pdfDoc.save();
+      const blob = new Blob([pdfBytes], { type: "application/pdf" });
+      setDownloadUrl(URL.createObjectURL(blob));
+    } catch (error) {
+      console.error(error);
+      setError("Error converting images to PDF. Please check the files.");
     }
+    setLoading(false);
   };
 
   return (
     <ToolLayout
-      title="Merge PDF Files"
-      desc="Combine multiple PDF documents into a single file. Fast, free, and secure."
-      icon={FileText}
+      title="JPG to PDF"
+      desc="Convert your JPG and PNG images into a single PDF document."
+      icon={ImageIcon}
       badge="PDF Tool"
       features={[
-        { icon: ShieldCheck, title: "100% Secure", desc: "All processing happens in your browser. No files are uploaded to any server." },
-        { icon: Zap, title: "Lightning Fast", desc: "Client-side merging means instant results without waiting for uploads." },
-        { icon: Sparkles, title: "High Quality", desc: "Preserves original formatting, images, and layout of all your PDF files." }
+        { icon: Sparkles, title: "High Quality", desc: "Preserves original image resolution and quality." },
+        { icon: Zap, title: "Fast", desc: "Conversion happens entirely in your browser." },
+        { icon: ShieldCheck, title: "Secure", desc: "Your images never leave your device." }
       ]}
     >
       <div className="bg-white dark:bg-[#1f2937] border border-gray-200 dark:border-gray-700 rounded-[2.5rem] p-8 md:p-12 shadow-sm transition-colors duration-300">
         <FileDropzone 
           onFileSelect={handleFileSelect} 
-          accept="application/pdf"
-          title="Drop your PDFs here or click to browse"
-          icon={FileText}
+          accept="image/jpeg,image/png" 
+          title="Drop your images here"
+          icon={ImageIcon}
         />
 
         <FileList 
           files={files} 
-          onRemove={removeFile} 
+          onRemove={handleRemoveFile} 
           onClear={handleClearFiles} 
         />
 
@@ -100,33 +109,33 @@ const MergePDF = () => {
 
         <div className="mt-12 flex flex-col gap-6">
           <button
-            onClick={mergePDFs}
-            disabled={files.length < 2 || isMerging}
+            onClick={convertToPDF}
+            disabled={loading || files.length === 0}
             className="w-full py-5 bg-blue-600 text-white rounded-2xl font-black text-xl flex items-center justify-center gap-4 hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg shadow-blue-200 dark:shadow-none active:scale-95"
           >
-            {isMerging ? (
+            {loading ? (
               <>
                 <Loader2 size={28} className="animate-spin" />
-                Processing...
+                Converting...
               </>
             ) : (
               <>
-                <FilePlus size={28} />
-                Merge {files.length} PDFs
+                <FileText size={28} />
+                Convert {files.length} Images to PDF
               </>
             )}
           </button>
 
-          {mergedUrl && (
+          {downloadUrl && (
             <motion.a
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              href={mergedUrl}
-              download="merged-toolsmama.pdf"
+              href={downloadUrl}
+              download="images-to-pdf-toolsmama.pdf"
               className="w-full py-5 bg-emerald-600 text-white rounded-2xl font-black text-xl flex items-center justify-center gap-4 hover:bg-emerald-700 transition-all shadow-lg shadow-emerald-200 dark:shadow-none animate-bounce-subtle"
             >
               <Download size={28} />
-              Download Merged PDF
+              Download PDF
             </motion.a>
           )}
         </div>
@@ -135,4 +144,4 @@ const MergePDF = () => {
   );
 };
 
-export default MergePDF;
+export default JPGToPDF;
